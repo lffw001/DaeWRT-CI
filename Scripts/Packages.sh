@@ -42,7 +42,7 @@ UPDATE_PACKAGE() {
 
 # 调用示例
 # UPDATE_PACKAGE "OpenAppFilter" "destan19/OpenAppFilter" "master" "" "custom_name1 custom_name2"
-# UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现coremark错误。
+# UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现cor[...]
 # iStore 全家桶（修正依赖）：
 
 # UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
@@ -89,6 +89,18 @@ UPDATE_PACKAGE "luci-app-quickstart" "linkease/nas-packages-luci" "main" "pkg"
 #   quickstart 本体在 nas-packages
 UPDATE_PACKAGE "quickstart" "linkease/nas-packages" "main" "pkg"
 
+# 修复 luci-app-quickstart 的依赖问题
+# 检查是否存在 luci-app-quickstart 并移除其对 quickstart 的强制依赖
+if [ -d "luci-app-quickstart" ]; then
+	MAKEFILE="luci-app-quickstart/Makefile"
+	if [ -f "$MAKEFILE" ]; then
+		# 移除对 quickstart 的强制依赖，改为可选依赖或移除
+		sed -i 's/DEPENDS:=.*+quickstart.*/DEPENDS:=/g' "$MAKEFILE"
+		# 或者将其改为可选的形式
+		sed -i 's/DEPENDS:=\(.*\)+quickstart\(.*\)/DEPENDS:=\1\2/g' "$MAKEFILE"
+		echo "已修复 luci-app-quickstart 的依赖问题"
+	fi
+fi
 
 UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "kix"
 UPDATE_PACKAGE "luci-app-pushbot" "zzsj0928/luci-app-pushbot" "master"
