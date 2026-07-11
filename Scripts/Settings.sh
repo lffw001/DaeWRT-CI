@@ -72,13 +72,6 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 	fi
 	#其他调整
 	echo "CONFIG_PACKAGE_kmod-usb-serial-qualcomm=y" >> ./.config
-	#禁用导致递归依赖和冲突的包
-	echo "CONFIG_PACKAGE_mihomo-alpha=n" >> ./.config
-	echo "CONFIG_PACKAGE_mihomo-meta=n" >> ./.config
-	echo "CONFIG_PACKAGE_kmod-nft-compat=n" >> ./.config
-	echo "CONFIG_PACKAGE_kmod-nftables=n" >> ./.config
-	echo "CONFIG_PACKAGE_prometheus-node-exporter-lua=n" >> ./.config
-	echo "CONFIG_PACKAGE_qmodem=n" >> ./.config
 fi
 #亚瑟修复USB2.0日志报错问题
 #wget -qO - https://github.com/davidtall/immortalwrt/commit/ce39feb4.patch | patch -p1
