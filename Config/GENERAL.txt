@@ -1,3 +1,7 @@
+# 使用opkg替换apk安装器
+CONFIG_USE_APK=n
+CONFIG_PACKAGE_opkg=y
+CONFIG_OPKG_USE_CURL=y
 #科学插件调整
 #CONFIG_PACKAGE_luci-app-homeproxy=y
 CONFIG_PACKAGE_luci-app-daed=y
